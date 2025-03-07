@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 
 @RestController
-@Tag(name = "Employee", description = "Сервис для выполнения операций над покупками")
+@Tag(name = "Purchase", description = "Сервис для выполнения операций над покупками")
 @RequestMapping("/estore/api/purchase")
 public class PurchaseController {
 
