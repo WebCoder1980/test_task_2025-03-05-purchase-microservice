@@ -1,14 +1,13 @@
 package ru.isands.test.estore.dao.entity;
 
 
-import java.io.Serializable;
-import java.time.LocalDate;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
-import lombok.Getter;
-import lombok.Setter;
+import java.io.Serializable;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -71,5 +70,4 @@ public class Employee implements Serializable {
 	@Column(name = "gender", nullable = false)
 	@NotNull
 	boolean gender;
-
 }

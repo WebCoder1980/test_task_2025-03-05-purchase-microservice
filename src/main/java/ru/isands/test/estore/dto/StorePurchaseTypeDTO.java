@@ -7,13 +7,10 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-public class ShopDTO {
+public class StorePurchaseTypeDTO {
     @NotNull
     private Long id;
 
     @NotNull
     private String name;
-
-    @NotNull
-    private String address;
 }
