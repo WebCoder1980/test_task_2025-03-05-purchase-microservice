@@ -11,6 +11,7 @@ import ru.isands.test.estore.dto.PurchaseDTO;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -101,7 +102,12 @@ public class PurchaseService {
                     isFirstLine = false;
                     continue;
                 }
+
                 String[] data = line.split(";");
+
+                if (data.length < 6) {
+                    throw new RuntimeException("Файл содержит меньше столбцов, чем нужно");
+                }
 
                 PurchaseDTO purchaseDTO = new PurchaseDTO();
                 purchaseDTO.setElectroId(Long.parseLong(data[1].trim()));
