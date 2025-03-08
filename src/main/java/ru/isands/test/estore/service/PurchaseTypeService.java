@@ -11,8 +11,6 @@ import ru.isands.test.estore.dto.PurchaseTypeDTO;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -21,20 +19,20 @@ import java.util.stream.Collectors;
 @Service
 public class PurchaseTypeService {
 
-    private final PurchaseTypeRepository purchaseRepository;
+    private final PurchaseTypeRepository purchaseTypeRepository;
 
-    public PurchaseTypeService(PurchaseTypeRepository purchaseRepository) {
-        this.purchaseRepository = purchaseRepository;
+    public PurchaseTypeService(PurchaseTypeRepository purchaseTypeRepository) {
+        this.purchaseTypeRepository = purchaseTypeRepository;
     }
 
     public PurchaseTypeDTO add(PurchaseTypeDTO purchaseTypeDTO) {
         PurchaseType purchaseType = mapToEntity(purchaseTypeDTO);
-        PurchaseType savedPurchase = purchaseRepository.save(purchaseType);
+        PurchaseType savedPurchase = purchaseTypeRepository.save(purchaseType);
         return mapToDTO(savedPurchase);
     }
 
     public List<PurchaseTypeDTO> getAll(int start, int limit) {
-        return purchaseRepository.findAll().stream()
+        return purchaseTypeRepository.findAll().stream()
                 .sorted(Comparator.comparing(PurchaseType::getId))
                 .skip(start)
                 .limit(limit)
@@ -43,25 +41,25 @@ public class PurchaseTypeService {
     }
 
     public PurchaseTypeDTO getById(Long id) {
-        return purchaseRepository.findById(id)
+        return purchaseTypeRepository.findById(id)
                 .map(this::mapToDTO)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Сотрудник не найден"));
     }
 
     public PurchaseTypeDTO update(Long id, PurchaseTypeDTO purchaseTypeDTO) {
-        PurchaseType existingPurchase = purchaseRepository.findById(id)
+        PurchaseType existingPurchase = purchaseTypeRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Сотрудник не найден"));
 
         updateEntityFromDTO(purchaseTypeDTO, existingPurchase);
-        PurchaseType updatedPurchase = purchaseRepository.save(existingPurchase);
+        PurchaseType updatedPurchase = purchaseTypeRepository.save(existingPurchase);
         return mapToDTO(updatedPurchase);
     }
 
     public void delete(Long id) {
-        if (!purchaseRepository.existsById(id)) {
+        if (!purchaseTypeRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Сотрудник не найден");
         }
-        purchaseRepository.deleteById(id);
+        purchaseTypeRepository.deleteById(id);
     }
 
     private PurchaseType mapToEntity(PurchaseTypeDTO purchaseTypeDTO) {
@@ -100,10 +98,10 @@ public class PurchaseTypeService {
     }
 
     public void saveAllPurchases(List<PurchaseTypeDTO> purchaseDTOS) {
-        List<PurchaseType> employees = purchaseDTOS.stream()
+        List<PurchaseType> purchaseTypes = purchaseDTOS.stream()
                 .map(this::mapToEntity)
                 .collect(Collectors.toList());
-        purchaseRepository.saveAll(employees);
+        purchaseTypes.forEach(i -> purchaseTypeRepository.save(i));
     }
 
     private PurchaseTypeDTO mapToDTO(PurchaseType purchaseType) {

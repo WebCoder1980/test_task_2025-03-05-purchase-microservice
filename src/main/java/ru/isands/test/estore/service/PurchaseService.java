@@ -123,10 +123,10 @@ public class PurchaseService {
     }
 
     public void saveAllPurchases(List<PurchaseDTO> purchaseDTOS) {
-        List<Purchase> employees = purchaseDTOS.stream()
+        List<Purchase> purchase = purchaseDTOS.stream()
                 .map(this::mapToEntity)
                 .collect(Collectors.toList());
-        purchaseRepository.saveAll(employees);
+        purchase.forEach(i -> purchaseRepository.save(i));
     }
 
     private PurchaseDTO mapToDTO(Purchase purchase) {
