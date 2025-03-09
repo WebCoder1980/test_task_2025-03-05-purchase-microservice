@@ -34,9 +34,26 @@ public class PurchaseService {
         return mapToDTO(savedPurchase);
     }
 
-    public List<PurchaseDTO> getAll(int start, int limit) {
+    public List<PurchaseDTO> getAll(int start, int limit, String orderBy, Boolean sortIsReversed) {
+        Comparator<Purchase> comparator = null;
+        switch (orderBy) {
+            case "id":
+                comparator = Comparator.comparing(Purchase::getId);
+                break;
+            case "purchasedate":
+                comparator = Comparator.comparing(Purchase::getPurchaseDate);
+                break;
+
+            default:
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Неизвестный формат сортировки");
+        }
+
+        if (sortIsReversed) {
+            comparator = comparator.reversed();
+        }
+
         return purchaseRepository.findAll().stream()
-                .sorted(Comparator.comparing(Purchase::getId))
+                .sorted(comparator)
                 .skip(start)
                 .limit(limit)
                 .map(this::mapToDTO)

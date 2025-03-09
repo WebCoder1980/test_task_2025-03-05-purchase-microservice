@@ -40,13 +40,15 @@ public class PurchaseController {
 	@GetMapping
 	@Operation(summary = "Получить все покупки", parameters = {
 			@Parameter(name = "start", description = "Номер первого в результате покупки", schema = @Schema(type = "integer", defaultValue = "0")),
-			@Parameter(name = "limit", description = "Максимальное колличество покупок в результате", schema = @Schema(type = "integer", defaultValue = "1000000"))
+			@Parameter(name = "limit", description = "Максимальное колличество покупок в результате", schema = @Schema(type = "integer", defaultValue = "1000000")),
+			@Parameter(name = "orderby", description = "Поле, по которому производится сортировка. Доступны id и purchasedate", schema = @Schema(type = "string", defaultValue = "id")),
+			@Parameter(name = "sortisreversed", description = "Является ли сортировка в перевёрнутом порядке", schema = @Schema(type = "string", defaultValue = "id"))
 			}, responses = {
 			@ApiResponse(responseCode = "200", description = "Список покупок"),
 			@ApiResponse(responseCode = "500", description = "Ошибка сервера", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDTO.class)))
 	})
-	public ResponseEntity<List<PurchaseDTO>> getAll(@RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "limit", defaultValue = "1000000") int limit) {
-		return ResponseEntity.ok(purchaseService.getAll(start, limit));
+	public ResponseEntity<List<PurchaseDTO>> getAll(@RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "limit", defaultValue = "1000000") int limit, @RequestParam(value = "orderby", defaultValue = "id") String orderBy, @RequestParam(value = "sortisreversed", defaultValue = "false") Boolean sortIsReversed) {
+		return ResponseEntity.ok(purchaseService.getAll(start, limit, orderBy, sortIsReversed));
 	}
 
 	@GetMapping("/{id}")
