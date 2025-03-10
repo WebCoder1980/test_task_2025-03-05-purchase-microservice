@@ -7,10 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.isands.test.estore.dto.PurchaseAmountByEmployeeDTO;
-import ru.isands.test.estore.dto.PurchaseCountByEmployeeDTO;
-import ru.isands.test.estore.dto.PurchaseDTO;
-import ru.isands.test.estore.dto.ErrorDTO;
+import ru.isands.test.estore.dto.*;
 import ru.isands.test.estore.service.PurchaseService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -69,6 +66,15 @@ public class PurchaseController {
 	})
 	public ResponseEntity<List<PurchaseAmountByEmployeeDTO>> getTotalAmountByEmployee() {
 		return ResponseEntity.ok(purchaseService.getTotalAmountByEmployee());
+	}
+
+	@GetMapping("juniorsalesconsultant-smartwatches")
+	@Operation(summary = "Получить лучшего младшего продавца-консультанта, продавшего больше всех умных часов", responses = {
+			@ApiResponse(responseCode = "200", description = "Вывод лучшего младшего продавца-консультанта, продавшего больше всех умных часов"),
+			@ApiResponse(responseCode = "500", description = "Ошибка сервера", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDTO.class)))
+	})
+	public ResponseEntity<PurchaseJuniorSalesConsultant_smartWatchesDTO> getJuniorSalesConsultant_smartWatches() {
+		return ResponseEntity.ok(purchaseService.getJuniorSalesConsultant_smartWatches());
 	}
 
 	@GetMapping("/{id}")

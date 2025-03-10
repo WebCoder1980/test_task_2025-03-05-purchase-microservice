@@ -1,5 +1,6 @@
 package ru.isands.test.estore.service;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,7 +10,9 @@ import ru.isands.test.estore.dao.repo.PurchaseRepository;
 import ru.isands.test.estore.dto.PurchaseAmountByEmployeeDTO;
 import ru.isands.test.estore.dto.PurchaseCountByEmployeeDTO;
 import ru.isands.test.estore.dto.PurchaseDTO;
+import ru.isands.test.estore.dto.PurchaseJuniorSalesConsultant_smartWatchesDTO;
 
+import java.awt.print.Pageable;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
@@ -67,6 +70,12 @@ public class PurchaseService {
 
     public List<PurchaseAmountByEmployeeDTO> getTotalAmountByEmployee() {
         return purchaseRepository.getTotalAmountByEmployee();
+    }
+
+    public PurchaseJuniorSalesConsultant_smartWatchesDTO getJuniorSalesConsultant_smartWatches() {
+        return purchaseRepository.getJuniorSalesConsultant_smartWatches()
+                .stream().findFirst()
+                .orElse(null);
     }
 
     public PurchaseDTO getById(Long id) {
