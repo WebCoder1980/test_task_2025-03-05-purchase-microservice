@@ -23,26 +23,26 @@ public class PurchaseJuniorSalesConsultant_smartWatchesDTO {
     }
 
     @NotNull
-    Long employeeId;
+    private Long employeeId;
 
     @NonNull
-    Long salesCount;
+    private Long salesCount;
 
     @NonNull
-    String lastName;
+    private String lastName;
 
     @NonNull
-    String firstName;
+    private String firstName;
 
     @NonNull
-    String patronymic;
+    private String patronymic;
 
     @NonNull
-    LocalDate birthDate;
+    private LocalDate birthDate;
 
     @NotNull
     private Long shopId;
 
     @NotNull
-    boolean gender;
+    private Boolean gender;
 }
