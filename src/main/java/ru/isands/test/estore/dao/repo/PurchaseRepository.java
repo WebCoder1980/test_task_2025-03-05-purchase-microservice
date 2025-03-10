@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import ru.isands.test.estore.dao.entity.Purchase;
 import ru.isands.test.estore.dto.PurchaseAmountByEmployeeDTO;
+import ru.isands.test.estore.dto.PurchaseAmountByPurchaseTypeDTO;
 import ru.isands.test.estore.dto.PurchaseCountByEmployeeDTO;
 import ru.isands.test.estore.dto.PurchaseJuniorSalesConsultant_smartWatchesDTO;
 
@@ -32,4 +33,11 @@ public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
             "ORDER BY COUNT(p.electroItem.id) DESC"
     )
     List<PurchaseJuniorSalesConsultant_smartWatchesDTO> getJuniorSalesConsultant_smartWatches();
+
+    @Query("SELECT new ru.isands.test.estore.dto.PurchaseAmountByPurchaseTypeDTO(p.shop.id, SUM(p.electroItem.price), p.shop.name, p.shop.address) " +
+    "FROM Purchase p " +
+    "WHERE p.type.name = 'Наличные' " +
+    "GROUP BY p.shop.id, p.shop.name, p.shop.address " +
+    "ORDER BY COUNT(p.electroItem.price) DESC")
+    List<PurchaseAmountByPurchaseTypeDTO> getPurchaseAmountByPurchaseTypeDTO();
 }

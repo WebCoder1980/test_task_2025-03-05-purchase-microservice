@@ -77,6 +77,15 @@ public class PurchaseController {
 		return ResponseEntity.ok(purchaseService.getJuniorSalesConsultant_smartWatches());
 	}
 
+	@GetMapping("purchaseamountbypurchasetype")
+	@Operation(summary = "Получить суммы денежных средств, полученной магазином через оплату наличными", responses = {
+			@ApiResponse(responseCode = "200", description = "Вывод суммы денежных средств, полученной магазином через оплату наличными"),
+			@ApiResponse(responseCode = "500", description = "Ошибка сервера", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDTO.class)))
+	})
+	public ResponseEntity<List<PurchaseAmountByPurchaseTypeDTO>> getPurchaseAmountByPurchaseTypeDTO() {
+		return ResponseEntity.ok(purchaseService.getPurchaseAmountByPurchaseTypeDTO());
+	}
+
 	@GetMapping("/{id}")
 	@Operation(summary = "Получить покупки по ID", responses = {
 			@ApiResponse(responseCode = "200", description = "Информация о покупках"),

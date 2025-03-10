@@ -7,10 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import ru.isands.test.estore.dao.entity.*;
 import ru.isands.test.estore.dao.repo.PurchaseRepository;
-import ru.isands.test.estore.dto.PurchaseAmountByEmployeeDTO;
-import ru.isands.test.estore.dto.PurchaseCountByEmployeeDTO;
-import ru.isands.test.estore.dto.PurchaseDTO;
-import ru.isands.test.estore.dto.PurchaseJuniorSalesConsultant_smartWatchesDTO;
+import ru.isands.test.estore.dto.*;
 
 import java.awt.print.Pageable;
 import java.io.BufferedReader;
@@ -76,6 +73,10 @@ public class PurchaseService {
         return purchaseRepository.getJuniorSalesConsultant_smartWatches()
                 .stream().findFirst()
                 .orElse(null);
+    }
+
+    public List<PurchaseAmountByPurchaseTypeDTO> getPurchaseAmountByPurchaseTypeDTO() {
+        return purchaseRepository.getPurchaseAmountByPurchaseTypeDTO();
     }
 
     public PurchaseDTO getById(Long id) {
