@@ -6,12 +6,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import ru.isands.test.estore.dao.entity.*;
 import ru.isands.test.estore.dao.repo.PurchaseRepository;
+import ru.isands.test.estore.dto.PurchaseAmountByEmployeeDTO;
+import ru.isands.test.estore.dto.PurchaseCountByEmployeeDTO;
 import ru.isands.test.estore.dto.PurchaseDTO;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -58,6 +59,14 @@ public class PurchaseService {
                 .limit(limit)
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
+    }
+
+    public List<PurchaseCountByEmployeeDTO> getTotalCountByEmployee() {
+        return purchaseRepository.getTotalCountByEmployee();
+    }
+
+    public List<PurchaseAmountByEmployeeDTO> getTotalAmountByEmployee() {
+        return purchaseRepository.getTotalAmountByEmployee();
     }
 
     public PurchaseDTO getById(Long id) {

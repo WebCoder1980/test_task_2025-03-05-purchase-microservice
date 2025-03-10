@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.isands.test.estore.dto.PurchaseAmountByEmployeeDTO;
+import ru.isands.test.estore.dto.PurchaseCountByEmployeeDTO;
 import ru.isands.test.estore.dto.PurchaseDTO;
 import ru.isands.test.estore.dto.ErrorDTO;
 import ru.isands.test.estore.service.PurchaseService;
@@ -49,6 +51,24 @@ public class PurchaseController {
 	})
 	public ResponseEntity<List<PurchaseDTO>> getAll(@RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "limit", defaultValue = "1000000") int limit, @RequestParam(value = "orderby", defaultValue = "id") String orderBy, @RequestParam(value = "sortisreversed", defaultValue = "false") Boolean sortIsReversed) {
 		return ResponseEntity.ok(purchaseService.getAll(start, limit, orderBy, sortIsReversed));
+	}
+
+	@GetMapping("totalcountbyemployee")
+	@Operation(summary = "Получить колличество всех покупок сгруппировав по сотруднику и отсортировав по колличеству в обратном порядке", responses = {
+			@ApiResponse(responseCode = "200", description = "Колличество всех покупок сгруппировав по сотруднику и отсортировав по сумме в обратном порядке"),
+			@ApiResponse(responseCode = "500", description = "Ошибка сервера", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDTO.class)))
+	})
+	public ResponseEntity<List<PurchaseCountByEmployeeDTO>> getTotalCountByEmployee() {
+		return ResponseEntity.ok(purchaseService.getTotalCountByEmployee());
+	}
+
+	@GetMapping("totalamountbyemployee")
+	@Operation(summary = "Получить сумму всех покупок сгруппировав по сотруднику и отсортировав по сумме в обратном порядке", responses = {
+			@ApiResponse(responseCode = "200", description = "Колличество всех покупок сгруппировав по сотруднику и отсортировав по сумме в обратном порядке"),
+			@ApiResponse(responseCode = "500", description = "Ошибка сервера", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDTO.class)))
+	})
+	public ResponseEntity<List<PurchaseAmountByEmployeeDTO>> getTotalAmountByEmployee() {
+		return ResponseEntity.ok(purchaseService.getTotalAmountByEmployee());
 	}
 
 	@GetMapping("/{id}")
