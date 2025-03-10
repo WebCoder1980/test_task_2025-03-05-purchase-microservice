@@ -9,10 +9,10 @@ import ru.isands.test.estore.dao.entity.*;
 import ru.isands.test.estore.dao.repo.PurchaseRepository;
 import ru.isands.test.estore.dto.*;
 
-import java.awt.print.Pageable;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -25,6 +25,7 @@ public class PurchaseService {
     private final PurchaseRepository purchaseRepository;
 
     final Integer LIMIT_SIZE = 10;
+    final Integer CURRENT_YEAR = 2024; // Потому что тестовые данные за 2024 год
 
     public PurchaseService(PurchaseRepository purchaseRepository) {
         this.purchaseRepository = purchaseRepository;
@@ -63,14 +64,14 @@ public class PurchaseService {
     }
 
     public List<PurchaseCountByEmployeeDTO> getTotalCountByEmployee() {
-        return purchaseRepository.getTotalCountByEmployee()
+        return purchaseRepository.getTotalCountByEmployee(LocalDate.of(CURRENT_YEAR, 1, 1).atStartOfDay())
                 .stream()
                 .limit(LIMIT_SIZE)
                 .collect(Collectors.toList());
     }
 
     public List<PurchaseAmountByEmployeeDTO> getTotalAmountByEmployee() {
-        return purchaseRepository.getTotalAmountByEmployee()
+        return purchaseRepository.getTotalAmountByEmployee(LocalDate.of(CURRENT_YEAR, 1, 1).atStartOfDay())
                 .stream()
                 .limit(LIMIT_SIZE)
                 .collect(Collectors.toList());
