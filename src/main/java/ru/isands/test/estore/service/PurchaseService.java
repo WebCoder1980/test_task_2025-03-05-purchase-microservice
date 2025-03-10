@@ -25,7 +25,6 @@ public class PurchaseService {
     private final PurchaseRepository purchaseRepository;
 
     final Integer LIMIT_SIZE = 10;
-    final Integer CURRENT_YEAR = 2024; // Потому что тестовые данные за 2024 год
 
     public PurchaseService(PurchaseRepository purchaseRepository) {
         this.purchaseRepository = purchaseRepository;
@@ -64,14 +63,14 @@ public class PurchaseService {
     }
 
     public List<PurchaseCountByEmployeeDTO> getTotalCountByEmployee() {
-        return purchaseRepository.getTotalCountByEmployee(LocalDate.of(CURRENT_YEAR, 1, 1).atStartOfDay())
+        return purchaseRepository.getTotalCountByEmployee(LocalDate.now().minusYears(1).atStartOfDay(), LocalDateTime.now())
                 .stream()
                 .limit(LIMIT_SIZE)
                 .collect(Collectors.toList());
     }
 
     public List<PurchaseAmountByEmployeeDTO> getTotalAmountByEmployee() {
-        return purchaseRepository.getTotalAmountByEmployee(LocalDate.of(CURRENT_YEAR, 1, 1).atStartOfDay())
+        return purchaseRepository.getTotalAmountByEmployee(LocalDate.now().minusYears(1).atStartOfDay(), LocalDateTime.now())
                 .stream()
                 .limit(LIMIT_SIZE)
                 .collect(Collectors.toList());
