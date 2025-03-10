@@ -22,8 +22,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class PurchaseService {
-
     private final PurchaseRepository purchaseRepository;
+
+    final Integer LIMIT_SIZE = 10;
 
     public PurchaseService(PurchaseRepository purchaseRepository) {
         this.purchaseRepository = purchaseRepository;
@@ -62,11 +63,17 @@ public class PurchaseService {
     }
 
     public List<PurchaseCountByEmployeeDTO> getTotalCountByEmployee() {
-        return purchaseRepository.getTotalCountByEmployee();
+        return purchaseRepository.getTotalCountByEmployee()
+                .stream()
+                .limit(LIMIT_SIZE)
+                .collect(Collectors.toList());
     }
 
     public List<PurchaseAmountByEmployeeDTO> getTotalAmountByEmployee() {
-        return purchaseRepository.getTotalAmountByEmployee();
+        return purchaseRepository.getTotalAmountByEmployee()
+                .stream()
+                .limit(LIMIT_SIZE)
+                .collect(Collectors.toList());
     }
 
     public PurchaseJuniorSalesConsultant_smartWatchesDTO getJuniorSalesConsultant_smartWatches() {
@@ -76,7 +83,10 @@ public class PurchaseService {
     }
 
     public List<PurchaseAmountByPurchaseTypeDTO> getPurchaseAmountByPurchaseTypeDTO() {
-        return purchaseRepository.getPurchaseAmountByPurchaseTypeDTO();
+        return purchaseRepository.getPurchaseAmountByPurchaseTypeDTO()
+                .stream()
+                .limit(LIMIT_SIZE)
+                .collect(Collectors.toList());
     }
 
     public PurchaseDTO getById(Long id) {
